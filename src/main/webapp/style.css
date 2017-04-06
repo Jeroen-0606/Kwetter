@@ -1,0 +1,54 @@
+body {
+    background-color: lavender;
+}
+
+.page-container {
+    position: relative;
+    width: 50%;
+    margin-left: auto;
+    margin-right: auto;
+    font-family: 'Comic Sans MS';
+}
+
+.login-container {
+    width: 50%;
+    margin-left: auto;
+    margin-right: auto;
+}
+
+.register-container {
+    width: 50%;
+    margin-left: auto;
+    margin-right: auto;
+}
+
+.tweets-container {
+
+}
+
+.tweet {
+    border-color: black;
+    border-width: 1px;
+    border-radius: 3px;
+    border-style: solid;
+    margin-bottom: 4px;
+    height: 60px;
+    padding-top: 10px;
+    padding-left: 5px;
+}
+
+.tweet:hover {
+    background-color: aliceblue;
+    border-color: darkgray;
+}
+
+.tweet-like {
+    float: right;
+    margin-right: 5px;
+    background-color: lightskyblue;
+    border-style: none;
+}
+
+.logout-button {
+    float: right;
+}

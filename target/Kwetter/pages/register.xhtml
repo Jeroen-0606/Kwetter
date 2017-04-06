@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+  Created by IntelliJ IDEA.
+  User: Jeroen0606
+  Date: 3-4-2017
+  Time: 12:40
+-->
+<!DOCTYPE html
+        PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+        "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://java.sun.com/jsf/html" xmlns:f="http://xmlns.jcp.org/jsf/core">
+
+<h:head>
+    <title>Title</title>
+    <link rel="stylesheet" type="text/css" href="/style.css"/>
+</h:head>
+
+<h:body>
+    <h:form>
+        <div class="register-container">
+            <h:inputText value="#{registerBean.username}" size="30"/><br />
+            <h:inputSecret value="#{registerBean.password}" size="30"/><br />
+            <h:commandButton value="Register" title="Register" type="submit" action="#{registerBean.register()}"/>
+        </div>
+    </h:form>
+</h:body>
+
+</html>
