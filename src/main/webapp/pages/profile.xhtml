@@ -14,14 +14,24 @@
 
 <h:head>
     <title>Profile</title>
+    <link rel="stylesheet" type="text/css" href="/Kwetter/style.css"/>
 </h:head>
 
-<h:body>
-    <h:graphicImage value="#{homeBean.user.photo}"></h:graphicImage>
-    #{homeBean.user.username}
-    #{homeBean.user.bio}
-    #{homeBean.user.name}
-    #{homeBean.user.location}
-</h:body>
+<body>
+    <h:form>
+        <h:commandButton styleClass="logout-button" action="#{homeBean.logOut()}" value="Logout"></h:commandButton>
+        <h:commandButton action="#{homeBean.goToHome()}" value="Home"></h:commandButton>
+    </h:form>
+    <div class="page-container">
+        <h:form>
+            <div class="profile-picture"><h:graphicImage width="300px" value="#{homeBean.user.photo}"></h:graphicImage></div><br />
+            Username: <h:inputText disabled="true" value="#{homeBean.user.username}"/><br />
+            Naam: <h:inputText value="#{homeBean.user.name}"/><br />
+            Biografie: <h:inputTextarea value="#{homeBean.user.bio}"/><br />
+            Locatie: <h:inputText value="#{homeBean.user.location}"/><br />
+            <h:commandButton action="#{homeBean.updateUser()}" value="Save"></h:commandButton>
+        </h:form>
+    </div>
+</body>
 
 </html>

@@ -24,19 +24,33 @@
     </h:form>
     <div class="page-container">
         <h:form>
-            <h:inputText value="#{homeBean.tweet}"/>
+            <h:inputTextarea value="#{homeBean.tweet}"/>
             <h:commandButton value="Tweet!" action="#{homeBean.createTweet()}"></h:commandButton>
         </h:form>
-        <h:form>
-            <ui:repeat value="#{homeBean.getAllTweets()}" var="value">
-                <div class="tweet">
-                    #{value.getUser().getUsername()} <br />
-                    #{value.message}
-                    <h:commandButton styleClass="tweet-like" action="#{homeBean.likeTweet(value.id)}" value="Like"/>
-                </div>
-            </ui:repeat>
-        </h:form>
+        <div class="tweets-container">
+            <h:form>
+                <ui:repeat value="#{homeBean.getAllTweets()}" var="value">
+                    <div class="tweet">
+                        #{value.getUser().getUsername()} <br />
+                        #{value.message}
+                        <h:commandButton styleClass="tweet-like" action="#{homeBean.likeTweet(value.id)}" value="Like"/>
+                    </div>
+                </ui:repeat>
+            </h:form>
+        </div>
+        <div class="users-container">
+            <h:form>
+                Following: <h:commandButton action="#{homeBean.setListNr(1)}" value="#{homeBean.getFollowingNr()}"/><br/>
+                Followers: <h:commandButton action="#{homeBean.setListNr(2)}" value="#{homeBean.getFollowersNr()}"/><br/>
+                <h:inputText value="#{homeBean.search}"/>
+                <h:commandButton action="#{homeBean.setListNr(3)}" value="Search"/><br />
+                <ui:repeat value="#{homeBean.getUserList()}" var="value">
+                    #{value.getUsername()} <br/>
+                </ui:repeat>
+            </h:form>
+        </div>
     </div>
+
 </h:body>
 
 </html>

@@ -1,5 +1,6 @@
 package rest;
 
+import model.Role;
 import model.Tweet;
 import model.User;
 import service.UserService;
@@ -87,4 +88,10 @@ public class RestService extends Application {
         userService.addRole(roleName, username);
     }
 
+    @GET
+    @Path("/getRolesOfUser/{username}")
+    @Produces(MediaType.APPLICATION_JSON)
+    public List<Role> getRolesOfUser(@PathParam("username") String username) {
+        return userService.getRole(username);
+    }
 }

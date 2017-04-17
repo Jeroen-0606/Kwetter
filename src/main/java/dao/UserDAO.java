@@ -14,9 +14,13 @@ import java.util.List;
 public interface UserDAO {
     boolean createUser(User user);
 
+    boolean updateUser(User user);
+
     boolean addFollowing(User user, User following);
 
     User getUser(String username);
+
+    List<User> searchUser(String search);
 
     boolean createTweet(String message, User user);
 

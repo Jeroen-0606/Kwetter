@@ -36,6 +36,11 @@ public class UserDAOImpl implements UserDAO, Serializable {
         return true;
     }
 
+    public boolean updateUser(User user) {
+        em.merge(user);
+        return true;
+    }
+
     public boolean addFollowing(User user, User following) {
         user.followUser(following);
         following.addFollower(user);
@@ -48,6 +53,12 @@ public class UserDAOImpl implements UserDAO, Serializable {
         Query query = em.createNamedQuery("findUserByUsername", User.class);
         query.setParameter("username", username);
         return (User) query.getSingleResult();
+    }
+
+    public List<User> searchUser(String search) {
+        Query query = em.createNamedQuery("searchUser", User.class);
+        query.setParameter("search", search);
+        return (List<User>) query.getResultList();
     }
 
     public boolean createTweet(String message, User user) {

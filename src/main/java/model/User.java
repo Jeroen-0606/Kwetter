@@ -15,6 +15,10 @@ import java.util.List;
         @NamedQuery(
                 name = "findUserByUsername",
                 query = "SELECT u FROM User u WHERE u.username = :username"
+        ),
+        @NamedQuery(
+                name="searchUser",
+                query = "SELECT u FROM User u WHERE u.username LIKE :search OR u.name LIKE :search OR u.location LIKE :search OR u.website LIKE :search"
         )
 })
 public class User implements Serializable {

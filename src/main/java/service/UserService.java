@@ -42,6 +42,10 @@ public class UserService {
         return userDAO.getUser(username);
     }
 
+    public List<User> searchUser(String search) {
+        return userDAO.searchUser("%" + search + "%");
+    }
+
     public boolean createUser(String username, String password) {
         byte[] digest;
         try {
@@ -55,6 +59,15 @@ public class UserService {
 
         userDAO.createUser(new User(username, password));
 
+        return true;
+    }
+
+    public boolean updateUser(String username, String name, String bio, String location) {
+        User user = getUser(username);
+        user.setName(name);
+        user.setBio(bio);
+        user.setLocation(location);
+        userDAO.updateUser(user);
         return true;
     }
 
@@ -104,4 +117,9 @@ public class UserService {
     public void addRole(String roleName, String username) {
         userDAO.addRole(userDAO.getUser(username), userDAO.getRoleByName(roleName));
     }
+
+    public List<Role> getRole(String username) {
+        return userDAO.getUser(username).getRoles();
+    }
+
 }
