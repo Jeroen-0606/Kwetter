@@ -4,7 +4,7 @@ body {
 
 .page-container {
     position: relative;
-    width: 50%;
+    width: 70%;
     margin-left: auto;
     margin-right: auto;
     font-family: 'Comic Sans MS';
@@ -23,7 +23,8 @@ body {
 }
 
 .tweets-container {
-
+    position: relative;
+    float: left;
 }
 
 .tweet {
@@ -33,6 +34,7 @@ body {
     border-style: solid;
     margin-bottom: 4px;
     height: 60px;
+    width: 400px;
     padding-top: 10px;
     padding-left: 5px;
 }
@@ -45,10 +47,23 @@ body {
 .tweet-like {
     float: right;
     margin-right: 5px;
-    background-color: lightskyblue;
+    background-color: magenta;
     border-style: none;
+    border-radius: 5px;
+
 }
 
 .logout-button {
     float: right;
+}
+
+.profile-picture {
+    width: 50px;
+}
+
+.users-container {
+    float: right;
+    width: 400px;
+    height: 500px;
+    background-color: azure;
 }

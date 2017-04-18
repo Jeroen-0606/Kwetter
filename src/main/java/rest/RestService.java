@@ -1,10 +1,12 @@
 package rest;
 
+import com.sun.jersey.api.core.ResourceConfig;
 import model.Role;
 import model.Tweet;
 import model.User;
 import service.UserService;
 
+import javax.annotation.PostConstruct;
 import javax.annotation.security.RolesAllowed;
 import javax.ejb.Stateless;
 import javax.inject.Inject;
@@ -12,6 +14,7 @@ import javax.ws.rs.*;
 import javax.ws.rs.core.Application;
 import javax.ws.rs.core.MediaType;
 import java.util.List;
+import java.util.Map;
 
 /**
  * Created by Jeroen0606 on 15-3-2017.
