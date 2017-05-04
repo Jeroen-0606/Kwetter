@@ -10,11 +10,11 @@ import javax.annotation.PostConstruct;
 import javax.annotation.security.RolesAllowed;
 import javax.ejb.Stateless;
 import javax.inject.Inject;
+import javax.print.attribute.standard.Media;
 import javax.ws.rs.*;
 import javax.ws.rs.core.Application;
 import javax.ws.rs.core.MediaType;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 
 /**
  * Created by Jeroen0606 on 15-3-2017.
@@ -65,6 +65,13 @@ public class RestService extends Application {
         userService.createTweet(message, username);
     }
 
+    @GET
+    @Path("/createTweet/{message}/{username}")
+    public boolean createNewTweet(@PathParam("message") String message, @PathParam("username") String username) {
+        userService.createTweet(message, username);
+        return true;
+    }
+
     @POST
     @Path("/addFollowing")
     public void addFollowing(@FormParam("username") String username, @FormParam("following") String following) {
@@ -96,5 +103,46 @@ public class RestService extends Application {
     @Produces(MediaType.APPLICATION_JSON)
     public List<Role> getRolesOfUser(@PathParam("username") String username) {
         return userService.getRole(username);
+    }
+
+    @GET
+    @Path("/getAllTweets/{username}")
+    @Produces(MediaType.APPLICATION_JSON)
+    public List<Tweet> getAllTweets(@PathParam("username") String username) {
+        List<Tweet> allTweets = new ArrayList<Tweet>();
+        allTweets.addAll(userService.getOwnTweets(username));
+        for (User user : userService.getFollowing(username)) {
+            allTweets.addAll(userService.getOwnTweets(user.getUsername()));
+        }
+        Collections.sort(allTweets, new Comparator<Tweet>(){
+            public int compare(Tweet o1, Tweet o2){
+                return o2.getId() - o1.getId();
+            }
+        });
+        return allTweets;
+    }
+
+    @GET
+    @Path("/searchUsers/{search}")
+    @Produces(MediaType.APPLICATION_JSON)
+    public List<User> searchUsers(@PathParam("search") String search) {
+        return userService.searchUser(search);
+    }
+
+    @GET
+    @Path("/updateUser/{username}/{name}/{bio}/{location}")
+    public boolean updateUser(@PathParam("username") String username, @PathParam("name") String name, @PathParam("bio") String bio, @PathParam("location") String location){
+        return userService.updateUser(username, name, bio, location);
+    }
+
+    @GET
+    @Path("/login/{username}/{password}")
+    @Produces(MediaType.APPLICATION_JSON)
+    public User login(@PathParam("username") String username, @PathParam("password") String password) {
+        try {
+            return userService.getUser(username);
+        } catch (Exception ex) {
+            return null;
+        }
     }
 }

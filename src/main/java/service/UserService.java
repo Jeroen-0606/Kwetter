@@ -95,7 +95,7 @@ public class UserService {
         List<Tweet> tweets = userDAO.getUser(username).getTweets();
         int listSize = tweets.size();
         //This if statement will depend on how the front end is set up
-        if(listSize >=10) {
+        if(listSize >=100) {
             return tweets.subList(listSize - 11, listSize - 1);
         } else {
             return tweets;
