@@ -7,6 +7,7 @@ import service.UserService;
 
 import javax.annotation.PostConstruct;
 import javax.ejb.EJB;
+import javax.ejb.MessageDriven;
 import javax.enterprise.context.RequestScoped;
 import javax.faces.context.ExternalContext;
 import javax.faces.context.FacesContext;
@@ -25,6 +26,7 @@ import java.util.List;
 /**
  * Created by Jeroen0606 on 28-3-2017.
  */
+
 @Named("homeBean")
 @RequestScoped
 public class HomeBean implements Serializable {
@@ -104,8 +106,9 @@ public class HomeBean implements Serializable {
         try (JMSContext jmsContext = connectionFactory.createContext()) {
             final JMSConsumer queueConsumer = jmsContext.createConsumer(queue);
             final JMSProducer producer = jmsContext.createProducer();
-            producer.send(queue, tweet);
-            System.out.println("Message verzonden" + tweet);
+            String message = user.getUsername() + ": " + tweet;
+            producer.send(queue, message);
+            System.out.println("Message verzonden" + message);
         }//jmsContext is autoclosed
         tweet = "";
     }
