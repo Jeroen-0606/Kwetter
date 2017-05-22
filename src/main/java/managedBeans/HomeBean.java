@@ -12,6 +12,9 @@ import javax.faces.context.ExternalContext;
 import javax.faces.context.FacesContext;
 import javax.inject.Inject;
 import javax.inject.Named;
+import javax.jms.*;
+import javax.naming.InitialContext;
+import javax.naming.NamingException;
 import java.io.IOException;
 import java.io.Serializable;
 import java.util.ArrayList;
@@ -69,8 +72,41 @@ public class HomeBean implements Serializable {
         return userService.getOwnTweets(user.getUsername());
     }
 
+    //Send Tweet -------------------------------------------------------
+
+    private static final String JNDI_CONNECTION_FACTORY = "jms/__defaultConnectionFactory";
+    /**
+     * the JNDI name under which your {@link Queue} should be: you have to
+     * create the queue before running this class
+     */
+    private static final String JNDI_QUEUE = "jms/kwetterjms";
+
+    /**
+     * @param <T> the return type
+     * @param retvalClass the returned value's {@link Class}
+     * @param jndi the JNDI path to the resource
+     * @return the resource at the specified {@code jndi} path
+     */
+    private <T> T lookup(Class<T> retvalClass, String jndi) {
+        try {
+            return retvalClass.cast(InitialContext.doLookup(jndi));
+        } catch (NamingException ex) {
+            throw new IllegalArgumentException("failed to lookup instance of " + retvalClass + " at " + jndi, ex);
+        }
+    }
+
     public void createTweet() {
-        userService.createTweet(tweet, user.getUsername());
+
+        final ConnectionFactory connectionFactory = lookup(ConnectionFactory.class, JNDI_CONNECTION_FACTORY);
+        final Queue queue = lookup(Queue.class, JNDI_QUEUE);
+        //JMSContext implements AutoClosable: let us try 'try-with-resources'
+        //see http://docs.oracle.com/javase/tutorial/essential/exceptions/tryResourceClose.html
+        try (JMSContext jmsContext = connectionFactory.createContext()) {
+            final JMSConsumer queueConsumer = jmsContext.createConsumer(queue);
+            final JMSProducer producer = jmsContext.createProducer();
+            producer.send(queue, tweet);
+            System.out.println("Message verzonden" + tweet);
+        }//jmsContext is autoclosed
         tweet = "";
     }
 
