@@ -9,7 +9,9 @@
       <case-sensitivity plain-identifiers="lower" quoted-identifiers="lower" />
       <secret-storage>master_key</secret-storage>
       <user-name>root</user-name>
+      <introspection-schemas>*:kwetter</introspection-schemas>
       <resolve-scope>kwetter:</resolve-scope>
+      <unqualified-resolve-schemas>kwetter:</unqualified-resolve-schemas>
     </data-source>
   </component>
 </project>
